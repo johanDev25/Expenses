@@ -3,16 +3,16 @@
     <div class="col-md-3">
       <h4 class="filter-header">Transaction Type <span>Choose to filter</span></h4>
       <div class="list-group filter-type">
-        <a href="#" class="list-group-item">Purchase</a>
-        <a href="#" class="list-group-item">Withdrawal</a>
-        <!-- more transaction types -->
+        <%@type.each do |type|%>
+        <%= link_to type.body, (params[:type].to_i == type.id ? request.params.merge(type: "") : request.params.merge(type: type.id)), class:"list-group-item #{'active' if params[:type].to_i == type.id}"%>
+        <%end%>
       </div>
 
       <h4 class="filter-header">Categoría <span>Selecciona para filtrar</span></h4>
       <div class="list-group filter-type">
-        <a href="#" class="list-group-item">Restaurants</a>
-        <a href="#" class="list-group-item">Car</a>
-        <!-- more categories  -->
+        <%@category.each do |cat|%>
+        <%= link_to cat.body, (params[:category].to_i == cat.id ? request.params.merge(category: "") : request.params.merge(category: cat.id)), class:"list-group-item #{'active' if params[:category].to_i == cat.id}"%>
+        <%end%>
       </div>
     </div>
     <div class="col-md-9 index-data">
@@ -33,7 +33,31 @@
 
       <div class="row" style="margin-top: 20px;">
         <div class="col-md-12">
-          <a href="#" class="btn btn-success pull-left"><span class="glyphicon glyphicon-plus"></span> New Expense</a>
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-success pull-left" data-toggle="modal" data-target="#exampleModal">
+            <span class="glyphicon glyphicon-plus"></span> New Expense
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <%= render 'formnew', expense: @expense %>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
+            </div>
+          </div>
           <h4 class="dropdown pull-right">
             <button type="button" class="dropdown-toggle btn btn-link" data-toggle="dropdown">April 2016 <span class="caret"></span></button>
             <ul class="dropdown-menu" role="menu">
@@ -55,29 +79,30 @@
           </tr>
         </thead>
         <tbody>
+          <% @expenses.each do |expense| %>
           <tr>
             <td class="date">
-              <div class="day">24</div>
-              <div class="month">Apr</div>
+              <div class="day"><%= expense.date %></div>
             </td>
             <td>
               <div>
-                <span class="type">Purchase</span>
+                <span class="type"><%= expense.type.body %></span>
               </div>
               <div>
-                <span class="concept">Example concept</span>
+                <span class="concept"><%= expense.concept %></span>
               </div>
             </td>
-            <td class="category text-right">Restauratns</td>
+            <td class="category text-right"><%= expense.category.body %></td>
             <td class="text-right" style="width: 170px;">
-              <div class="amount">$1,000,000</div>
+              <div class="amount"><%= expense.amount %></div>
               <div class="actions">
-                <a href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a>
-                <a href="#"><span class="glyphicon glyphicon-trash"></span> Delete</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+                <a href="#"><span class="glyphicon glyphicon-edit"></span><%= link_to 'Edit', edit_expense_path(expense) %></a>
+                <a href="#"><span class="glyphicon glyphicon-trash"></span><%= link_to 'Destroy', expense, method: :delete, data: { confirm: 'Are you sure?' } %></a>
+              </td>
+            </tr>
+                <% end %>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-</div>
