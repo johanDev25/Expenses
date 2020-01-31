@@ -6,16 +6,25 @@ class ExpensesController < ApplicationController
     @category = Category.all
     @expense = Expense.new
 
+    @date = 30.days.ago.to_date
+    @start_date = params[:start].try(:to_date)  || 1200.months.ago.to_date
+    @end_date = params[:end].try(:to_date) || Date.current
+    range = (@start_date..@end_date)
+
     if params[:category].present? && params[:type].present?
-      @expenses = Expense.where("category_id = ? AND type_id = ?", "#{params[:category]}", "#{params[:type]}").order("date DESC")
+      @expenses = Expense.where("category_id = ? AND type_id = ?", "#{params[:category]}", "#{params[:type]}").where(date: range).order(date: :desc)
     elsif params[:category].present?
-      @expenses = Expense.where("category_id = ?", "#{params[:category]}").order("date DESC")
+      @expenses = Expense.where("category_id = ?", "#{params[:category]}").where(date: range).order(date: :desc)
     elsif params[:type].present?
-      @expenses = Expense.where("type_id = ?", "#{params[:type]}").order("date DESC")
+      @expenses = Expense.where("type_id = ?", "#{params[:type]}").where(date: range).order(date: :desc)
     else
-      @expenses = Expense.all
+      @expenses = Expense.all.order(date: :desc)
     end
+
     @total = @expenses.sum(:amount)
+    @number = @expenses.count
+    @average = @expenses.average(:amount)
+
   end
 
   def show
@@ -30,23 +39,14 @@ class ExpensesController < ApplicationController
 
   def create
     @expense = Expense.new(expense_params)
-
-    respond_to do |format|
       if @expense.save
-        format.html { redirect_to expenses_url, notice: 'Expense was successfully created.' }
-      else
-        format.html { render :new }
-      end
+       redirect_to expenses_url, notice: 'Expense was successfully created.'
     end
   end
 
   def update
-    respond_to do |format|
       if @expense.update(expense_params)
-        format.html { redirect_to expenses_url, notice: 'Expense was successfully updated.' }
-      else
-        format.html { render :edit }
-      end
+       redirect_to expenses_url, notice: 'Expense was successfully updated.'
     end
   end
 

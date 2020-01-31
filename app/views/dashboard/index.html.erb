@@ -1,19 +1,19 @@
 <div class="container">
   <div class="row">
     <div class="total-box col-md-3">
-      $200,000
+       $<%= @today %>
       <span>HOY</span>
     </div>
     <div class="total-box col-md-3">
-      $140,000
+      $<%= @yesterday %>
       <span>AYER</span>
     </div>
     <div class="total-box col-md-3">
-      $7,500,000
+      $<%= @this_month %>
       <span>ESTE MES</span>
     </div>
     <div class="total-box col-md-3">
-      $6,200,000
+      $<%= @last_month %>
       <span>MES PASADO</span>
     </div>
   </div>
@@ -23,7 +23,9 @@
       <div class="panel panel-default">
         <div class="panel-heading">Últimos 6 Meses</div>
         <div class="panel-body">
-          <div id="expenses-chart" style="height: 250px;"></div>
+          <div id="expenses-chart" style="height: 250px;">
+            <%= column_chart @last_months ,stacked: true, pefix: "$", thousands: "," %>
+          </div>
         </div>
       </div>
     </div>
@@ -31,7 +33,9 @@
       <div class="panel panel-default">
         <div class="panel-heading">Por Día</div>
         <div class="panel-body">
-          <div id="daily-expenses-chart" style="height: 250px;"></div>
+          <div id="daily-expenses-chart" style="height: 250px;">
+            <%= column_chart @by_day,stacked: true, pefix: "$", thousands: "," %>
+          </div>
         </div>
       </div>
     </div>
@@ -42,7 +46,9 @@
       <div class="panel panel-default">
         <div class="panel-heading">Por Categoría</div>
         <div class="panel-body">
-          <div id="category-chart" style="height: 250px;"></div>
+          <div id="category-chart" style="height: 250px;">
+            <%= pie_chart @by_category ,stacked: true, pefix: "$", thousands: "," %>
+          </div>
         </div>
       </div>
     </div>
@@ -50,7 +56,9 @@
       <div class="panel panel-default">
         <div class="panel-heading">Acumulado</div>
         <div class="panel-body">
-          <div id="month-acc" style="height: 250px;"></div>
+          <div id="month-acc" style="height: 250px;">
+            <%= area_chart @accumulated %>
+          </div>
         </div>
       </div>
     </div>

@@ -18,54 +18,31 @@
     <div class="col-md-9 index-data">
       <div class="row" style="margin-top: 10px;">
         <div class="summary-box col-md-4 text-center">
-          <div class="summary-value">$2,500,000</div>
+          <div class="summary-value">$<%= @total %></div>
           <div class="summary-label">Total</div>
         </diV>
         <div class="summary-box col-md-4 text-center">
-          <div class="summary-value">2</div>
+          <div class="summary-value"><%= @number %></div>
           <div class="summary-label">Transactions</div>
         </div>
         <div class="summary-box col-md-4 text-center">
-          <div class="summary-value">$1,000,000</div>
+          <div class="summary-value">$<%= @average %></div>
           <div class="summary-label">Average</div>
         </div>
       </div>
 
       <div class="row" style="margin-top: 20px;">
         <div class="col-md-12">
-          <!-- Button trigger modal -->
-          <button type="button" class="btn btn-success pull-left" data-toggle="modal" data-target="#exampleModal">
-            <span class="glyphicon glyphicon-plus"></span> New Expense
-          </button>
+          <%= link_to  new_expense_path, remote:true, :class => 'btn btn-success' do %>
+              <span class="glyphicon glyphicon-plus"></span>New Expense
+           <% end %>
 
-          <!-- Modal -->
-          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <%= render 'formnew', expense: @expense %>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <h4 class="dropdown pull-right">
-            <button type="button" class="dropdown-toggle btn btn-link" data-toggle="dropdown">April 2016 <span class="caret"></span></button>
-            <ul class="dropdown-menu" role="menu">
-              <li role="presentation"><a href="#">April 2016</a></li>
-              <li role="presentation"><a href="#">March 2016</a></li>
-              <!-- more months -->
-            </ul>
-          </h4>
+        <div class="dropdown pull-right">
+          <input type="text" id="rangepicker">
+          <%= form_tag expenses_url, method: :get do %>
+          <%= hidden_field_tag :start %>
+          <%= hidden_field_tag :end%>
+          <% end %>
         </div>
       </div>
 
@@ -96,13 +73,28 @@
             <td class="text-right" style="width: 170px;">
               <div class="amount"><%= expense.amount %></div>
               <div class="actions">
-                <a href="#"><span class="glyphicon glyphicon-edit"></span><%= link_to 'Edit', edit_expense_path(expense) %></a>
+                <%= link_to edit_expense_path(expense), remote:true do %>
+                <span class="glyphicon glyphicon-edit"></span> Edit
+                <% end %>
                 <a href="#"><span class="glyphicon glyphicon-trash"></span><%= link_to 'Destroy', expense, method: :delete, data: { confirm: 'Are you sure?' } %></a>
               </td>
             </tr>
-                <% end %>
+            <% end %>
           </tbody>
         </table>
       </div>
     </div>
   </div>
+
+  <<script>
+    $("#rangepicker").daterangepicker({
+      opens: 'left',
+      startDate: moment("<%= l @date, format: '%Y-%m-%d' %>"),
+      endDate: moment("<%= l @end_date, format: '%Y-%m-%d' %>")
+    }, function(start, end, label) {
+      $("#start").val(start.format('YYYY-MM-DD '));
+      $("#end").val(end.format('YYYY-MM-DD '));
+      $("form").submit();
+    });
+
+  </script>

@@ -14,4 +14,8 @@
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require turbolinks
+//= require moment
+//= require daterangepicker
+//= require chartkick
+//= require Chart.bundle
 //= require_tree .

@@ -1,0 +1,56 @@
+<div id="expense-modal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"><%= title %></h4>
+      </div>
+      <div class="modal-body">
+        <%= form_for @expense , remote:true do |form| %>
+          <% if expense.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(expense.errors.count, "error") %> prohibited this expense from being saved:</h2>
+              <ul>
+                <% expense.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+           <div class="form-group">
+            <%= form.label :date %>
+            <%= form.date_field :date, class: "form-control input", value: Date.today%>
+          </div>
+
+           <div class="form-group">
+            <%= form.label :concept %>
+            <%= form.text_field :concept, id: 'concept', class: 'form-control' %>
+          </div>
+
+           <div class="form-group">
+            <%= form.label :amount %>
+            <%= form.text_field :amount, id: 'amount', class: 'form-control' %>
+          </div>
+
+           <div class="form-group">
+             <%= form.label :category_id %>
+              <%= form.collection_select(:category_id, Category.all, :id, :body ,{}, {:class=>'form-control'}) %>
+           </div>
+           <div class="form-group">
+             <%= form.label :type_id %>
+          <%= form.collection_select(:type_id, Type.all, :id, :body ,{}, {:class=>'form-control'}) %>
+          </div>
+
+           <div class="action text-right">
+            <%= form.submit %>
+          </div>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
