@@ -1,1 +1,2 @@
-$('<%= j render "form", title: "Publicar Producto" %>').modal();
+$('#modal-window').html('<%= j render 'form' %>')
+$('.modal').modal('show');

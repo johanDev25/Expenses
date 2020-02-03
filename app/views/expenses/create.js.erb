@@ -1,0 +1,3 @@
+<% if @expense.errors.any? %>
+ $(".error").html('<%= j render "error" %>')
+<% end %>

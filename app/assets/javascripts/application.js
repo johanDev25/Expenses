@@ -15,6 +15,7 @@
 //= require bootstrap-sprockets
 //= require turbolinks
 //= require moment
+//= require bootstrap/modal
 //= require daterangepicker
 //= require chartkick
 //= require Chart.bundle

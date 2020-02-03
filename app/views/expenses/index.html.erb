@@ -33,10 +33,9 @@
 
       <div class="row" style="margin-top: 20px;">
         <div class="col-md-12">
-          <%= link_to  new_expense_path, remote:true, :class => 'btn btn-success' do %>
+          <%= link_to  new_expense_path, remote:true, :class => 'btn btn-success', "data-toggle" => "modal", 'data-target' => '#modal-window' do %>
               <span class="glyphicon glyphicon-plus"></span>New Expense
            <% end %>
-
         <div class="dropdown pull-right">
           <input type="text" id="rangepicker">
           <%= form_tag expenses_url, method: :get do %>
@@ -73,7 +72,7 @@
             <td class="text-right" style="width: 170px;">
               <div class="amount"><%= expense.amount %></div>
               <div class="actions">
-                <%= link_to edit_expense_path(expense), remote:true do %>
+                <%= link_to edit_expense_path(expense), remote:true, "data-toggle" => "modal", 'data-target' => '#modal-window' do %>
                 <span class="glyphicon glyphicon-edit"></span> Edit
                 <% end %>
                 <a href="#"><span class="glyphicon glyphicon-trash"></span><%= link_to 'Destroy', expense, method: :delete, data: { confirm: 'Are you sure?' } %></a>
@@ -85,8 +84,9 @@
       </div>
     </div>
   </div>
-
-  <<script>
+  <div class="modal fade" id="modal-window" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ </div>
+  <script>
     $("#rangepicker").daterangepicker({
       opens: 'left',
       startDate: moment("<%= l @date, format: '%Y-%m-%d' %>"),
