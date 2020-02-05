@@ -43,6 +43,13 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
+  gem 'rspec-rails', '~> 3.9'
+  gem 'factory_bot_rails', '~> 5.1', '>= 5.1.1'
+  gem 'capybara', '~> 3.31'
+end
+
+group :test do
+  gem 'database_cleaner', '~> 1.8', '>= 1.8.2'
 end
 
 group :development do
@@ -54,8 +61,5 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
-group :test do
-  gem 'minitest-rails-capybara'
-end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
