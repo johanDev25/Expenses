@@ -4,12 +4,5 @@ one:
   date: 2020-01-24
   concept: MyString
   amount: 9.99
-  category: one
-  type: one
-
-two:
-  date: 2020-01-24
-  concept: MyString
-  amount: 9.99
-  category: two
-  type: two
+  category: 1
+  type: 2

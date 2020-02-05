@@ -1,10 +1,3 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
 Category.create([{ body: 'Fun' },
                { body: 'Car' },
                { body: 'Restaurants' },
@@ -17,3 +10,10 @@ Type.create([{ body: 'Purchase' },
              { body: 'Withdrawal' },
              { body: 'Transfer'},
              { body: 'Payment'}])
+
+(4.months.ago.to_date..Date.current).each do |date|
+rand(6).times do
+  Expense.create!(date: date, concept: Faker::Commerce.product_name , amount: Faker::Number.between(10,900) ,
+                  category_id: Faker::Number.between(1 ,7) , type_id: Faker::Number.between(1 ,4) )
+end
+end
