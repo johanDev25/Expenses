@@ -37,7 +37,7 @@
 
       <div class="row" style="margin-top: 20px;">
         <div class="col-md-12">
-          <%= link_to  new_expense_path, remote:true, :class => 'btn btn-success', "data-toggle" => "modal", 'data-target' => '#modal-window' do %>
+          <%= link_to  new_expense_path, remote:true, :id => 'new_expense', :class => 'btn btn-success', "data-toggle" => "modal", 'data-target' => '#modal-window' do %>
               <span class="glyphicon glyphicon-plus"></span>New Expense
            <% end %>
         <div class="dropdown pull-right">

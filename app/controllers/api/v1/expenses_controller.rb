@@ -1,6 +1,6 @@
 class Api::V1::ExpensesController < ApplicationController
   def index
-    @expenses = Expense.all
+    @expenses = Expense.all.paginate(page: params[:page], per_page: 10)
     render json: @expenses, status: :ok
   end
 
