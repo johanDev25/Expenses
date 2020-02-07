@@ -34,7 +34,7 @@ gem 'jbuilder', '~> 2.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 gem 'momentjs-rails'
-
+  gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
 gem "chartkick"
 
 gem 'groupdate'
@@ -45,7 +45,6 @@ gem 'bootstrap-daterangepicker-rails'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
-  gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
   gem 'rails-controller-testing'
   gem 'minitest-reporters'
 end
