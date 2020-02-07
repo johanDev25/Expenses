@@ -1,15 +1,15 @@
-Category.create([{ body: 'Fun' },
-  { body: 'Car' },
-  { body: 'Restaurants' },
-  { body: 'Education' },
-  { body: 'Services' },
-  { body: 'Travel' },
-  { body: 'Home' }])
+#Category.create([{ body: 'Fun' },
+#  { body: 'Car' },
+#  { body: 'Restaurants' },
+#  { body: 'Education' },
+#  { body: 'Services' },
+#  { body: 'Travel' },
+#  { body: 'Home' }])
 
-  Type.create([{ body: 'Purchase' },
-    { body: 'Withdrawal' },
-    { body: 'Transfer'},
-    { body: 'Payment'}])
+#  Type.create([{ body: 'Purchase' },
+#    { body: 'Withdrawal' },
+#    { body: 'Transfer'},
+#    { body: 'Payment'}])
 
     300.times do
       Expense.create([{
