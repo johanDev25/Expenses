@@ -32,6 +32,14 @@
       </div>
     </div>
   </nav>
+  <% flash.each do |type, message| %>
+  <div id="alert-container"class="alert-growl alert alert-success alert-dismissible fade in" style="margin-top: -20px;">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <%= message %>
+  </div>
+  <% end %>
   <%= yield %>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>

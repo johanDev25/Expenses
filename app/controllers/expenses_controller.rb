@@ -18,7 +18,7 @@ class ExpensesController < ApplicationController
     elsif params[:type].present?
       @expenses = Expense.where("type_id = ?", "#{params[:type]}").where(date: range).order(date: :desc)
     else
-      @expenses = Expense.all.order(date: :desc)
+      @expenses = Expense.all.where(date: range).order(date: :desc)
     end
 
     @total = @expenses.sum(:amount)

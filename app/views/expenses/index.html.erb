@@ -1,105 +1,110 @@
-<div id="notice">
-  <div class="alert alert-warning alert-dismissible fade show" role="alert">
-    <%= notice %>
-  </div></div>
-<div class="container">
-  <div class="row">
-    <div class="col-md-3">
-      <h4 class="filter-header">Transaction Type <span>Choose to filter</span></h4>
-      <div class="list-group filter-type">
-        <%@type.each do |type|%>
-        <%= link_to type.body, (params[:type].to_i == type.id ? request.params.merge(type: "") : request.params.merge(type: type.id)), class:"list-group-item #{'active' if params[:type].to_i == type.id}"%>
-        <%end%>
-      </div>
-
-      <h4 class="filter-header">Categoría <span>Selecciona para filtrar</span></h4>
-      <div class="list-group filter-type">
-        <%@category.each do |cat|%>
-        <%= link_to cat.body, (params[:category].to_i == cat.id ? request.params.merge(category: "") : request.params.merge(category: cat.id)), class:"list-group-item #{'active' if params[:category].to_i == cat.id}"%>
-        <%end%>
-      </div>
-    </div>
-    <div class="col-md-9 index-data">
-      <div class="row" style="margin-top: 10px;">
-        <div class="summary-box col-md-4 text-center">
-          <div class="summary-value">$<%= @total %></div>
-          <div class="summary-label">Total</div>
-        </diV>
-        <div class="summary-box col-md-4 text-center">
-          <div class="summary-value"><%= @number %></div>
-          <div class="summary-label">Transactions</div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <h4 class="filter-header">Transaction Type <span>Choose to filter</span></h4>
+        <div class="list-group filter-type">
+          <%@type.each do |type|%>
+          <%= link_to type.body, (params[:type].to_i == type.id ? request.params.merge(type: "") : request.params.merge(type: type.id)), class:"list-group-item #{'active' if params[:type].to_i == type.id}"%>
+          <%end%>
         </div>
-        <div class="summary-box col-md-4 text-center">
-          <div class="summary-value">$<%= @average %></div>
-          <div class="summary-label">Average</div>
+
+        <h4 class="filter-header">Categoría <span>Selecciona para filtrar</span></h4>
+        <div class="list-group filter-type">
+          <%@category.each do |cat|%>
+          <%= link_to cat.body, (params[:category].to_i == cat.id ? request.params.merge(category: "") : request.params.merge(category: cat.id)), class:"list-group-item #{'active' if params[:category].to_i == cat.id}"%>
+          <%end%>
         </div>
       </div>
-
-      <div class="row" style="margin-top: 20px;">
-        <div class="col-md-12">
-          <%= link_to  new_expense_path, remote:true, :id => 'new_expense', :class => 'btn btn-success', "data-toggle" => "modal", 'data-target' => '#modal-window' do %>
-              <span class="glyphicon glyphicon-plus"></span>New Expense
-           <% end %>
-        <div class="dropdown pull-right">
-          <p><strong>Filter by date:</strong></p>
-          <input type="text" id="rangepicker">
-          <%= form_tag expenses_url, method: :get do %>
-          <%= hidden_field_tag :start %>
-          <%= hidden_field_tag :end%>
-          <% end %>
+      <div class="col-md-9 index-data">
+        <div class="row" style="margin-top: 10px;">
+          <div class="summary-box col-md-4 text-center">
+            <div class="summary-value">$<%= @total %></div>
+            <div class="summary-label">Total</div>
+          </diV>
+          <div class="summary-box col-md-4 text-center">
+            <div class="summary-value"><%= @number %></div>
+            <div class="summary-label">Transactions</div>
+          </div>
+          <div class="summary-box col-md-4 text-center">
+            <div class="summary-value">$<%= @average %></div>
+            <div class="summary-label">Average</div>
+          </div>
         </div>
-      </div>
 
-      <table id="expenses-table" class="table table-hover" style="margin-top: 20px;">
-        <thead>
-          <tr>
-            <th class="text-center">Día</th>
-            <th>Concepto</th>
-            <th class="text-right">Categoría</th>
-            <th class="text-right">Valor</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @expenses.each do |expense| %>
-          <tr>
-            <td class="date">
-              <div class="day"><%= expense.date %></div>
-            </td>
-            <td>
-              <div>
-                <span class="type"><%= expense.type.body if expense.type %></span>
-              </div>
-              <div>
-                <span class="concept"><%= expense.concept %></span>
-              </div>
-            </td>
-            <td class="category text-right"><%= expense.category.body if expense.category %></td>
-            <td class="text-right" style="width: 170px;">
-              <div class="amount"><%= expense.amount %></div>
-              <div class="actions">
-                <%= link_to edit_expense_path(expense), remote:true, "data-toggle" => "modal", 'data-target' => '#modal-window' do %>
-                <span class="glyphicon glyphicon-edit"></span> Edit
-                <% end %>
-                <a href="#"><span class="glyphicon glyphicon-trash"></span><%= link_to 'Destroy', expense, method: :delete, data: { confirm: 'Are you sure?' } %></a>
-              </td>
-            </tr>
+        <div class="row" style="margin-top: 20px;">
+          <div class="col-md-12">
+            <%= link_to  new_expense_path, remote:true, :id => 'new_expense', :class => 'btn btn-success', "data-toggle" => "modal", 'data-target' => '#modal-window' do %>
+            <span class="glyphicon glyphicon-plus"></span>New Expense
             <% end %>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-  <div class="modal fade" id="modal-window" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
- </div>
-  <script>
-    $("#rangepicker").daterangepicker({
-      opens: 'left',
-      startDate: moment("<%= l @date, format: '%Y-%m-%d' %>"),
-      endDate: moment("<%= l @end_date, format: '%Y-%m-%d' %>")
-    }, function(start, end, label) {
-      $("#start").val(start.format('YYYY-MM-DD '));
-      $("#end").val(end.format('YYYY-MM-DD '));
-      $("form").submit();
-    });
+            <div class="dropdown pull-right">
+              <p><strong>Filter by date:</strong></p>
+              <input type="text" id="rangepicker">
+              <%= form_tag expenses_url, method: :get do %>
+              <%= hidden_field_tag :start %>
+              <%= hidden_field_tag :end%>
+              <% end %>
+            </div>
+          </div>
 
-  </script>
+          <table id="expenses-table" class="table table-hover" style="margin-top: 20px;">
+            <thead>
+              <tr>
+                <th class="text-center">Día</th>
+                <th>Concepto</th>
+                <th class="text-right">Categoría</th>
+                <th class="text-right">Valor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @expenses.each do |expense| %>
+              <tr>
+                <td class="date">
+                  <div class="day"><%= expense.date %></div>
+                </td>
+                <td>
+                  <div>
+                    <span class="type"><%= expense.type.body if expense.type %></span>
+                  </div>
+                  <div>
+                    <span class="concept"><%= expense.concept %></span>
+                  </div>
+                </td>
+                <td class="category text-right"><%= expense.category.body if expense.category %></td>
+                <td class="text-right" style="width: 170px;">
+                  <div class="amount"><%= expense.amount %></div>
+                  <div class="actions">
+                    <%= link_to edit_expense_path(expense), remote:true, "data-toggle" => "modal", 'data-target' => '#modal-window' do %>
+                    <span class="glyphicon glyphicon-edit"></span> Edit
+                    <% end %>
+                    <a href="#"><span class="glyphicon glyphicon-trash"></span><%= link_to 'Destroy', expense, method: :delete, data: { confirm: 'Are you sure?' } %></a>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="modal-window" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      </div>
+      <script>
+        var ranges = {
+          'Today': [moment(), moment()],
+          'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month': [moment().startOf('month'), moment().endOf('month')],
+          'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        }
+        $("#rangepicker").daterangepicker({
+          opens: 'left',
+          startDate: moment("<%= l @date, format: '%Y-%m-%d' %>"),
+          endDate: moment("<%= l @end_date, format: '%Y-%m-%d' %>"),
+          ranges: ranges
+        }, function(start, end, label) {
+          $("#start").val(start.format('YYYY-MM-DD '));
+          $("#end").val(end.format('YYYY-MM-DD '));
+          $("form").submit();
+        });
+
+      </script>
