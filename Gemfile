@@ -9,7 +9,7 @@ gem 'pg'
 # Use Puma as the app server
 gem 'puma'
 # Use SCSS for stylesheets
-gem 'bootstrap-sass', '~> 3.3.6'
+gem 'bootstrap-sass', '~> 3.4.1'
 
 gem 'tzinfo-data'
 
