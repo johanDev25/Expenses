@@ -8,7 +8,7 @@ gem 'sqlite3', git: "https://github.com/larskanis/sqlite3-ruby", branch: "add-ge
 # Use Puma as the app server
 gem 'puma'
 # Use SCSS for stylesheets
-gem 'bootstrap-sass', '~> 3.3.6'
+gem 'bootstrap-sass', '~> 3.4.1'
 
 gem 'tzinfo-data'
 
